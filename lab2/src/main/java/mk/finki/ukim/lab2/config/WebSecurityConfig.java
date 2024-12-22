@@ -33,7 +33,7 @@ public class WebSecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/assets/**", "/register","/register/verify","/register/verify/**", "/login").permitAll()
+                        .requestMatchers("/", "/assets/**", "/register","/register/verify","/register/verify/**", "/login","/login/verify","/login/verify/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")  // Only Admins can access /admin/**
                         .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")  // Admins and Managers can access /manager/**
                         .requestMatchers("/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")  // Users, Managers, and Admins can access /user/**
@@ -51,8 +51,8 @@ public class WebSecurityConfig{
                         .logoutSuccessUrl("/login"))
                 .exceptionHandling(ex -> ex.accessDeniedPage("/access_denied"))
                 .sessionManagement(session -> session
-                        .maximumSessions(1)  // Single session per user
-                        .expiredUrl("/login?error=sessionExpired"));  // Redirect to login page when session expires
+                        .maximumSessions(1)
+                        .expiredUrl("/login?error=sessionExpired"));
 
         return http.build();
     }
@@ -60,8 +60,8 @@ public class WebSecurityConfig{
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("user"))
+                .username("kostadinovikm@gmail.com")
+                .password(passwordEncoder.encode("ieamanuoxrsyjfzy"))
                 .roles("USER")
                 .build();
         UserDetails manager = User.builder()

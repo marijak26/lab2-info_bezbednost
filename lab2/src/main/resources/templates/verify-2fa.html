@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2FA Verification</title>
+</head>
+<body>
+<h2>Two-Factor Authentication</h2>
+<p>Please enter the 2FA code sent to your email.</p>
+
+<!-- Form for submitting the 2FA code -->
+<form action="/login/verify" method="post">
+  <input type="hidden" name="username" th:value="${username}">
+  <label for="code">2FA Code:</label>
+  <input type="text" id="code" name="code" required>
+  <button type="submit">Verify</button>
+</form>
+
+<!-- Error message display -->
+<div th:if="${error}" style="color: red; margin-top: 10px;">
+  <p th:text="${error}"></p>
+</div>
+</body>
+</html>
