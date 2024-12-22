@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         // Generate a verification link (you can use a UUID or a unique token)
-        String verificationLink = "http://localhost:8080/verify/" + generateVerificationToken(user.getUsername());
+        String verificationLink = "http://localhost:8080/register/verify?email=" + user.getUsername();
 
         // Send email
         try {

@@ -26,6 +26,4 @@ public class UserDetailsImpl extends User {
     public String getPassword() {
         return password;
     }
-
-    // Other required UserDetails methods can be implemented here
 }

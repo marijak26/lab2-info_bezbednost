@@ -54,7 +54,7 @@ public class RegisterController {
             // Send verification email
             sendVerificationEmail(username, verificationCode);
 
-            return "redirect:/verify?email=" + username;
+            return "redirect:/register/verify?email=" + username;
         } catch (RuntimeException ex) {
             return "redirect:/register?error=" + ex.getMessage();
         }

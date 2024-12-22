@@ -33,7 +33,7 @@ public class WebSecurityConfig{
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/assets/**", "/register", "/login").permitAll()
+                        .requestMatchers("/", "/assets/**", "/register","/register/verify","/register/verify/**", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")  // Only Admins can access /admin/**
                         .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")  // Admins and Managers can access /manager/**
                         .requestMatchers("/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")  // Users, Managers, and Admins can access /user/**
