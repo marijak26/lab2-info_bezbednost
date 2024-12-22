@@ -38,7 +38,7 @@ public class LoginController {
         try {
             user = authService.login(username, password);
             request.getSession().setAttribute("user", user);
-            request.getSession().setAttribute("loginTime", LocalDateTime.now());
+            request.getSession().setAttribute("loginTime", LocalDateTime.now());  // Store login time
 
             // Check if the session has expired
             if (isSessionExpired(request)) {
@@ -61,7 +61,6 @@ public class LoginController {
         return loginTime.plusMinutes(MAX_SESSION_TIME_MINUTES).isBefore(LocalDateTime.now());
     }
 }
-
 
 
 

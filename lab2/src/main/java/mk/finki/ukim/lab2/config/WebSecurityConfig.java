@@ -21,11 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig{
 
     private final PasswordEncoder passwordEncoder;
-    private final CustomUsernamePasswordAuthenticationProvider customAuthenticationProvider;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder, CustomUsernamePasswordAuthenticationProvider customAuthenticationProvider) {
+    public WebSecurityConfig(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-        this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
     @Bean
@@ -83,11 +81,8 @@ public class WebSecurityConfig{
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(customAuthenticationProvider);
-
+        authenticationManagerBuilder.userDetailsService(userDetailsService());
         return authenticationManagerBuilder.build();
     }
+
 }
-
-
-

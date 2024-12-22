@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;
     private boolean isCredentialsNonExpired = true;
-    private boolean isEnabled = true; // Ensure this is set to true upon verification
+    private boolean isEnabled = true;
     private boolean isVerified = false;
 
     @Enumerated(value = EnumType.STRING)
