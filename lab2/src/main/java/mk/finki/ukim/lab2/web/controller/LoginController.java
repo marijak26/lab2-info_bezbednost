@@ -1,5 +1,6 @@
 package mk.finki.ukim.lab2.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import mk.finki.ukim.lab2.model.User;
 import mk.finki.ukim.lab2.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,36 +9,60 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDateTime;
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+    private static final int MAX_SESSION_TIME_MINUTES = 60;  // 1 hour session time limit
 
-    @GetMapping("/login")
-    public String loginForm(Model model) {
-        model.addAttribute("user", new User());
+    public LoginController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @GetMapping
+    public String getLoginPage() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute User user, Model model) {
-        boolean isValid = authService.verifyPassword(user.getUsername(), user.getPassword());
-        if (isValid) {
-            if (!authService.isUserVerified(user.getUsername())) {
-                model.addAttribute("error", "Please verify your email first.");
-                return "login";
+    @PostMapping
+    public String login(HttpServletRequest request, Model model) {
+        User user = null;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        try {
+            user = authService.login(username, password);
+            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("loginTime", LocalDateTime.now());
+
+            // Check if the session has expired
+            if (isSessionExpired(request)) {
+                request.getSession().invalidate();
+                return "redirect:/login?error=sessionExpired";
             }
-            String twoFactorCode = authService.generateTwoFactorCode(user.getUsername());
-            model.addAttribute("twoFactorCode", twoFactorCode);
-            return "twoFactor";
-        } else {
-            model.addAttribute("error", "Invalid username or password.");
+
+            return "redirect:/home";
+        } catch (RuntimeException ex) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", ex.getMessage());
             return "login";
         }
     }
+
+    private boolean isSessionExpired(HttpServletRequest request) {
+        LocalDateTime loginTime = (LocalDateTime) request.getSession().getAttribute("loginTime");
+        if (loginTime == null) return true;
+
+        return loginTime.plusMinutes(MAX_SESSION_TIME_MINUTES).isBefore(LocalDateTime.now());
+    }
 }
+
+
 
 
 

@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
 </head>
 <body>
-<h2>Welcome to the Home Page</h2>
-<p>You are successfully logged in!</p>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+        <p class="lead text-muted">Welcome to the Role-Based Access Management System!</p>
+        <a href="/logout" class="btn btn-danger btn-sm logout-button">Logout</a>
+    </div>
+</section>
 </body>
 </html>
