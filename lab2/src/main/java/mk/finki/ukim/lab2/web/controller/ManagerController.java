@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ManagerController {
 
     @GetMapping("/overview")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public String getManagerOverview(Model model) {
         model.addAttribute("message", "Welcome to the Manager Overview!");
         return "manager/overview";
     }
 
     @GetMapping("/tasks")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public String getManagerTasks(Model model) {
         model.addAttribute("message", "Here are your management tasks!");
         return "manager/tasks";

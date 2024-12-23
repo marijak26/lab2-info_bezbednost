@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
     @GetMapping("/dashboard")
-    @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
     public String getUserDashboard(Model model) {
         model.addAttribute("message", "Welcome to the User Dashboard!");
         return "user/dashboard";
     }
 
     @GetMapping("/profile")
-    @PreAuthorize("hasAnyRole('USER','MANAGER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
     public String getUserProfile(Model model) {
         model.addAttribute("message", "This is your user profile!");
         return "user/profile";

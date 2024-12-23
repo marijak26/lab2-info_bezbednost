@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     @GetMapping("/settings")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getAdminSettings(Model model) {
         model.addAttribute("message", "Welcome to Admin Settings!");
         return "admin/settings";
     }
 
     @GetMapping("/reports")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getAdminReports(Model model) {
         model.addAttribute("message", "Here are the admin reports.");
         return "admin/reports";
