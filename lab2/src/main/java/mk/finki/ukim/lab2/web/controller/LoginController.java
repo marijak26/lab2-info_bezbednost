@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class LoginController {
 
     private final AuthService authService;
-    private static final int MAX_SESSION_TIME_MINUTES = 60;  // 1 hour session time limit
+    private static final int MAX_SESSION_TIME_MINUTES = 60;
 
     public LoginController(AuthService authService) {
         this.authService = authService;
@@ -38,9 +38,8 @@ public class LoginController {
         try {
             user = authService.login(username, password);
             request.getSession().setAttribute("user", user);
-            request.getSession().setAttribute("loginTime", LocalDateTime.now());  // Store login time
+            request.getSession().setAttribute("loginTime", LocalDateTime.now());
 
-            // Check if the session has expired
             if (isSessionExpired(request)) {
                 request.getSession().invalidate();
                 return "redirect:/login?error=sessionExpired";

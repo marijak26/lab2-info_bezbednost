@@ -47,11 +47,9 @@ public class RegisterController {
         try {
             this.userService.register(username, password, repeatedPassword, name, surname, role);
 
-            // Generate a unique verification code
             String verificationCode = UUID.randomUUID().toString();
             verificationCodes.put(username, verificationCode);
 
-            // Send verification email
             sendVerificationEmail(username, verificationCode);
 
             return "redirect:/register/verify?email=" + username;
@@ -83,7 +81,6 @@ public class RegisterController {
         String storedCode = verificationCodes.get(email);
         if (storedCode != null && storedCode.equals(code)) {
             verificationCodes.remove(email);
-            // User is verified, you can update the user record here if necessary.
             userService.verifyUser(email);
             return "redirect:/login?success=Email verified successfully!";
         } else {

@@ -32,10 +32,10 @@ public class WebSecurityConfig{
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/assets/**", "/register","/register/verify","/register/verify/**", "/login","/login/verify","/login/verify/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Only Admins can access /admin/**
-                        .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")  // Admins and Managers can access /manager/**
-                        .requestMatchers("/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")  // Users, Managers, and Admins can access /user/**
-                        .anyRequest().authenticated())  // All other requests need authentication
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()

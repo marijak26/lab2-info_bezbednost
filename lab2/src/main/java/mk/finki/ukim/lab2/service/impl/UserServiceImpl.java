@@ -47,15 +47,12 @@ public class UserServiceImpl implements UserService {
 
         User user = new User(username, passwordEncoder.encode(password), name, surname, role);
 
-        // Save user initially as unverified and disabled
         user.setVerified(false);
         user.setEnabled(false);
         userRepository.save(user);
 
-        // Generate a verification link (you can use a UUID or a unique token)
         String verificationLink = "http://localhost:8080/register/verify?email=" + user.getUsername();
 
-        // Send email
         try {
             emailService.sendVerificationEmail(user.getUsername(), verificationLink);
         } catch (MessagingException | MailException e) {
