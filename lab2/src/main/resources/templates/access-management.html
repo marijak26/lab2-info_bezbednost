@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+  <h1 class="text-center">Access Management</h1>
+
+  <div class="card mt-4">
+    <div class="card-header">Request Resource</div>
+    <div class="card-body">
+      <form th:action="@{/resource/request}" method="post">
+        <div class="mb-3">
+          <label for="userId" class="form-label">User ID:</label>
+          <input type="text" class="form-control" id="userId" name="userId" required>
+        </div>
+        <div class="mb-3">
+          <label for="resourceId" class="form-label">Resource ID:</label>
+          <input type="text" class="form-control" id="resourceId" name="resourceId" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Request Access</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">Active Accesses</div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Resource ID</th>
+          <th>Access Granted Until</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="access : ${activeAccess}">
+          <td th:text="${access.userId}"></td>
+          <td th:text="${access.resourceId}"></td>
+          <td th:text="${access.expiryTime}"></td>
+          <td>
+            <form th:action="@{/resource/revoke}" method="post">
+              <input type="hidden" name="userId" th:value="${access.userId}">
+              <input type="hidden" name="resourceId" th:value="${access.resourceId}">
+              <button type="submit" class="btn btn-danger">Revoke</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

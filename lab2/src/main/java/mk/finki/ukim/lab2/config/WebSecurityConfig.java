@@ -34,7 +34,7 @@ public class WebSecurityConfig{
                         .requestMatchers("/", "/assets/**", "/register","/register/verify","/register/verify/**", "/login","/login/verify","/login/verify/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")
+                        .requestMatchers("/user/**","/access-management","/resource/request","/resource/revoke").hasAnyRole("USER", "MANAGER", "ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -58,8 +58,8 @@ public class WebSecurityConfig{
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
-                .username("kostadinovikm@gmail.com")
-                .password(passwordEncoder.encode("ieamanuoxrsyjfzy"))
+                .username("user")
+                .password(passwordEncoder.encode("user"))
                 .roles("USER")
                 .build();
         UserDetails manager = User.builder()
